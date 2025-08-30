@@ -50,14 +50,14 @@ buttons.forEach(button=>{
             resultsDiv.textContent = `It's a draw! You both chose ${humanChoice}.`;
         }
         else if(result=="human"){
-            resultsDiv.textContent = `You win this round!`;
+            resultsDiv.textContent = `You win this round! ${humanChoice} beats ${computerChoice}`;
             humanScore++;
         }
         else{
-            resultsDiv.textContent= `You lose this round`;
+            resultsDiv.textContent= `You lose this round. ${computerChoice} beats ${humanChoice}`;
             computerScore++;
         }
-        scoreDiv.textContent=`Your score-> ${humanScore}, Computer's score-> ${computerScore}`
+        scoreDiv.textContent=`Your score: ${humanScore}, Computer's score: ${computerScore}`
         if(humanScore==5 || computerScore==5){
             gameOver= true;
             if(humanScore==5){
