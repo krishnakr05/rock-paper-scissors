@@ -1,3 +1,7 @@
+let humanScore=0;
+let computerScore=0;
+let gameOver=false;
+
 function getComputerChoice(){
     let num= Math.floor(Math.random()*3);
     if (num==0){
@@ -11,10 +15,6 @@ function getComputerChoice(){
     }
 }
 
-function getHumanChoice(){
-    let userInput= prompt("Enter choice:");
-    return userInput;
-}
 
 function playRound(humanChoice, computerChoice){
         if(humanChoice==computerChoice){
@@ -33,52 +33,43 @@ function playRound(humanChoice, computerChoice){
         
 }
 
-function playGame(){
-    let humanScore=0;
-    let computerScore=0;
+const resultsDiv= document.querySelector("#results");
+const scoreDiv= document.querySelector("#score");
+const finalResultDiv= document.querySelector("#finalResult");
 
-    
-
-    for(let i=0; i<5; i++){
-        const humanSelection= getHumanChoice();
-        const computerSelection= getComputerChoice();
-
-        console.log("round: "+(i+1))
-        console.log("Your choice: ", humanSelection);
-        console.log("Computer's choice :", computerSelection);
-
-        result = playRound(humanSelection, computerSelection);
-        
+const buttons= document.querySelectorAll("button");
+buttons.forEach(button=>{
+    button.addEventListener("click", ()=>{
+        if(gameOver){
+            return;
+        }
+        const humanChoice= button.id;
+        const computerChoice= getComputerChoice();
+        const result= playRound(humanChoice, computerChoice);
         if(result=="draw"){
-            console.log("It's a draw")
+            resultsDiv.textContent = `It's a draw! You both chose ${humanChoice}.`;
         }
         else if(result=="human"){
-            console.log("You win this round!")
-            humanScore++
+            resultsDiv.textContent = `You win this round!`;
+            humanScore++;
         }
         else{
-            console.log("Computer wins this round!")
-            computerScore++
+            resultsDiv.textContent= `You lose this round`;
+            computerScore++;
         }
-
-        console.log("Your score: "+humanScore)
-        console.log("Computer score: "+computerScore)    
-    }
-
-    console.log("FINAL RESULT")
-    if(humanScore>computerScore){
-        console.log("You win!")
-    }
-    else if(humanScore<computerScore){
-        console.log("You lose")
-    }
-    else{
-        console.log("It's a draw!")
-    }
-    
-}
+        scoreDiv.textContent=`Your score-> ${humanScore}, Computer's score-> ${computerScore}`
+        if(humanScore==5 || computerScore==5){
+            gameOver= true;
+            if(humanScore==5){
+                finalResultDiv.textContent= `You win the game!`;
+            }
+            else{
+                finalResultDiv.textContent= `Computer wins the game!`
+            }
+        }
+    })
+})
 
 
 
-console.log(playGame())
 
